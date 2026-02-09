@@ -43,7 +43,7 @@ class VisualizePendulum():
 
     # --- Constructor ---
     def __init__(self, simulation_results: Dict[str, Tuple[np.ndarray, np.ndarray]],
-                 reference: bool = False, m: float = 0.2, d: float = 0.2, g: float = 9.81, L: float = 0.5) -> None:
+                 reference: bool = False) -> None:
         """
         Initializes the pendulum visualization by first processing the data for multiple runs.
 
@@ -53,16 +53,7 @@ class VisualizePendulum():
                 tuples (time_values_array, state_values_array) for each simulation run.
             reference (bool): Whether to compute and show a single reference solution 
                               (applied to the first simulation run in the dictionary).
-            m (float): mass of the pendulum
-            d (float): Damping coefficient for the reference solution.
-            g (float): inertial acceleration
-            L (float): length of pendulum
         """
-        # Compute the necessary parameters
-        omega_0_ref: float = np.sqrt(g/L)
-        D_ref: float = d/(2*m*omega_0_ref)
-
-
         self.pendulum_data_runs = {}
         self.plot_initializer = PendulumPlotInitializer() # Initialize the plotting utility
 
@@ -77,8 +68,6 @@ class VisualizePendulum():
                 values_time=t_vals,
                 values_state=u_vals,
                 reference=run_reference_flag,
-                omega_0_ref=omega_0_ref,
-                D_ref=D_ref
             )
             self.pendulum_data_runs[name] = current_pendulum_data
 

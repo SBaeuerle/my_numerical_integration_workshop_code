@@ -67,8 +67,7 @@ class PendulumData:
             (t_min, t_max),
             [theta_start, omega_start], 
             method="RK45",
-            t_eval=t_eval,
-            args=(self.omega_0_ref, self.D_ref)
+            t_eval=t_eval
         )
         self.values_time_ref = sol.t
         self.values_angle_ref = sol.y[0]

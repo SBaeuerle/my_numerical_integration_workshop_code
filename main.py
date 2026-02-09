@@ -32,5 +32,5 @@ results = {
     'Euler_explicit': (t_values, np.array([x,v])),
 }
 
-viz_pendel = VisualizePendulum(results, show_reference, m,d,g,L)
+viz_pendel = VisualizePendulum(results, show_reference)
 viz_pendel.animate()
