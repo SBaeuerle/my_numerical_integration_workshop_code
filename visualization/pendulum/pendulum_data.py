@@ -79,14 +79,16 @@ class PendulumData:
         theta_start: float = self.values_angle[0]
         omega_start: float = self.values_dangle[0]
 
-        t_eval = np.linspace(t_min, t_max, len(self.values_time))
+        t_eval = np.arange(t_min, t_max, self.ref_step_width)
 
         sol = solve_ivp(
             damped_pendulum_ode,
             (t_min, t_max),
             [theta_start, omega_start], 
             method="RK45",
-            t_eval=t_eval
+            t_eval=t_eval,
+            rtol=1e-9,
+            atol=1e-9
         )
         self.values_time_ref = sol.t
         self.values_angle_ref = sol.y[0]
