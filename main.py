@@ -10,8 +10,6 @@ z0 = [np.deg2rad(75),0]
 
 t_values, u_values = euler_explicit(damped_pendulum_ode,[0,t_end],z0, h)
 
-
-
 show_reference = True
 results = {
     'Euler_explicit': (t_values, u_values),

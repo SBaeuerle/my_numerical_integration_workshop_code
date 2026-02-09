@@ -17,26 +17,45 @@ class PendulumData:
     ref_step_width: float = 0.01
     init_step_width: float
     step_width: float
-    omega_0_ref: float
-    D_ref: float
 
     def __init__(self, values_time: np.ndarray, values_state: np.ndarray,
-                 reference: bool = False, omega_0_ref: float = np.sqrt(9.81),
-                 D_ref: float = 0.05) -> None:
+                 reference: bool = False) -> None:
         self.reference = reference
-        self.omega_0_ref = omega_0_ref
-        self.D_ref = D_ref
         self._assign_values(values_time, values_state)
 
         if self.reference:
             self._compute_and_assign_reference_solution()
 
+    def _normalize_shapes(self, values_time: np.ndarray, values_state: np.ndarray):
+        values_time = np.asarray(values_time).flatten()
+        values_state = np.asarray(values_state)
+        N = len(values_time)
+
+        # 1. Check if u is oriented correctly: (N, dof)
+        if values_state.shape[0] == N:
+            pass  # Already correct
+
+        # 2. Check if u is transposed: (dof, N)
+        elif values_state.shape[1] == N:
+            values_state = values_state.T
+
+        else:
+            # 3. Emergency brake: Neither dimension matches N
+            raise ValueError(f"Shape mismatch! Time has {N} steps, "
+                             f"but state array has shape {values_state.shape}.")
+        return values_time, values_state
+
+
     def _assign_values(self, values_time: np.ndarray, values_state: np.ndarray) -> None:
+
+        # Use the gatekeeper first to get always the correct orientation
+        self.values_time, values_state = self._normalize_shapes(values_time, values_state)
+
         self._assign_init_step_width(values_time)
         if self.init_step_width >= self.ref_step_width:
             self.values_time = values_time
-            self.values_angle = values_state[0, :]
-            self.values_dangle = values_state[1, :]
+            self.values_angle = values_state[:, 0]
+            self.values_dangle = values_state[:, 1]
             self.step_width = self.init_step_width
         else:
             self._sample_data_down_and_assign(values_time, values_state)
