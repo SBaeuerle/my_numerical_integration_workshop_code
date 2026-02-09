@@ -10,9 +10,9 @@ from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
 # Import the PendulumData class
-from pendulum_data import PendulumData
+from visualization.pendulum.pendulum_data import PendulumData
 # Import the new PendulumPlotInitializer
-from pendulum_plot_utils import PendulumPlotInitializer
+from visualization.pendulum.pendulum_plot_utils import PendulumPlotInitializer
 
 matplotlib.use('TkAgg') # Consider moving this to the main execution script (e.g., main.py)
 

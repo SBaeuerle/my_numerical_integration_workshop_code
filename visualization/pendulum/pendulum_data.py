@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 import numpy as np
 from scipy.integrate import solve_ivp
-from pendulum_ode import damped_ode 
+from system_odes.pendulum_ode import damped_pendulum_ode
 
 class PendulumData:
     """
@@ -63,7 +63,7 @@ class PendulumData:
         t_eval = np.linspace(t_min, t_max, len(self.values_time))
 
         sol = solve_ivp(
-            damped_ode,
+            damped_pendulum_ode,
             (t_min, t_max),
             [theta_start, omega_start], 
             method="RK45",

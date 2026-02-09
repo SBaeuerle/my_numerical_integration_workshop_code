@@ -1,5 +1,5 @@
 import numpy as np
-from visualize_pendulum import VisualizePendulum
+from visualization.pendulum.visualize_pendulum import VisualizePendulum
 
 # Parameter 
 g = 9.81
