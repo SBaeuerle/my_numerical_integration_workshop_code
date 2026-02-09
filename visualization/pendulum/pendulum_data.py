@@ -46,8 +46,8 @@ class PendulumData:
 
     def _sample_data_down_and_assign(self, values_time: np.ndarray, values_state: np.ndarray) -> None:
         values_time_interpolated = np.arange(values_time[0], values_time[-1] + self.ref_step_width, self.ref_step_width)
-        values_angle_interpolated = np.interp(values_time_interpolated, values_time, values_state[0, :])
-        values_dangle_interpolated = np.interp(values_time_interpolated, values_time, values_state[1, :])
+        values_angle_interpolated = np.interp(values_time_interpolated, values_time, values_state[:, 0])
+        values_dangle_interpolated = np.interp(values_time_interpolated, values_time, values_state[:, 1])
 
         self.values_time = values_time_interpolated
         self.values_angle = values_angle_interpolated

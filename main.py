@@ -1,35 +1,20 @@
 import numpy as np
 from visualization.pendulum.visualize_pendulum import VisualizePendulum
+from solver.explicit_solver import euler_explicit
+from system_odes.pendulum_ode import damped_pendulum_ode
 
-# Parameter 
-g = 9.81
-L = 0.5
-m = 0.2
-d =  0.2
-
-# Zeit
+# Time, step-width and initial conditions
 t_end = 5
 h = 0.01
+z0 = [np.deg2rad(75),0]
 
-# Speicherplatz schonmal belegen
-t_values = np.arange(0, t_end, h)
-number_of_steps = len(t_values)-1
-x = np.zeros_like(t_values)
-v = np.zeros_like(t_values)
+t_values, u_values = euler_explicit(damped_pendulum_ode,[0,t_end],z0, h)
 
-# Anfangebdingungen
-x[0] = np.deg2rad(75)
-v[0] = 0
-
-# Euler explizit
-for j in range(0,number_of_steps):
-    x[j+1] = x[j] + h*v[j]
-    v[j+1] = v[j] + h*(-d/m*v[j]-g/L*np.sin(x[j]))
 
 
 show_reference = True
 results = {
-    'Euler_explicit': (t_values, np.array([x,v])),
+    'Euler_explicit': (t_values, u_values),
 }
 
 viz_pendel = VisualizePendulum(results, show_reference)
