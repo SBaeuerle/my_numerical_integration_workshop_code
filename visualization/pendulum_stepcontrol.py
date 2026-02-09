@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def visualize_stepcontrol(t_vals, u_vals, h_vals, err_vals):
+def visualize_pendulum_stepcontrol(t_vals, u_vals, h_vals, err_vals):
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), sharex=True,
                                    gridspec_kw={'height_ratios': [1, 1.2]})
 

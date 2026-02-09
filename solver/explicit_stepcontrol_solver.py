@@ -7,8 +7,8 @@ def stepcontrol_mid_point_rule(fcn, t_interval, z0, h_init):
     h_min = 1e-4
     h_max = 1.0
 
-    max_rel_err = 1e-6
-    max_abs_err = 1e-3
+    max_rel_err = 1e-8
+    max_abs_err = 1e-6
 
     # time
     t_start = min(t_interval)
