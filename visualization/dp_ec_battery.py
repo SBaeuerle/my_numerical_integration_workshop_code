@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from system_odes.dp_ec_battery_model import get_battery_parameters, current_profile
-
+from visualization.helper import smart_plot
 
 def get_plotting_data(t_arr, z_arr):
     """Computes U_term, U_oc, and current array for plotting."""
@@ -93,4 +93,5 @@ def visualize_dp_ec_battery(results_dict):
     ax_volt_2.legend()
 
     plt.tight_layout(rect=[0, 0, 1, 0.96])
-    plt.show()
+
+    smart_plot(fig,'dp_ec_battery.png')

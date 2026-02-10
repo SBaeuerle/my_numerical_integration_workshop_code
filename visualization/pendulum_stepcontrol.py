@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
+from visualization.helper import smart_plot
 
 def visualize_pendulum_stepcontrol(t_vals, u_vals, h_vals, err_vals):
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), sharex=True,
@@ -38,4 +38,5 @@ def visualize_pendulum_stepcontrol(t_vals, u_vals, h_vals, err_vals):
 
     fig.suptitle('Adaptive Step-Control: Strategy Visualization', fontsize=14)
     plt.tight_layout()
-    plt.show()
+
+    smart_plot(fig, 'pendulum_stepcontrol.png')
