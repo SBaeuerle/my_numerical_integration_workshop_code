@@ -4,12 +4,10 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-python.python",        // Essential for the Run button
-        "ms-toolsai.jupyter"      // Essential for displaying animations
+        "ms-python.python",        
+        "ms-toolsai.jupyter"      
       ]
     }
   },
-  // Installs ffmpeg (ignoring minor repo errors) and your requirements
-  //"postCreateCommand": "sudo apt-get update || true && sudo apt-get install -y ffmpeg && pip install -r requirements.txt"
   "postCreateCommand": "echo hello"  
 }
