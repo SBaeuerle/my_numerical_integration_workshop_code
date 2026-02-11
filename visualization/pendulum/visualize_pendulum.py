@@ -1,5 +1,6 @@
 from typing import Optional, Tuple, List, Dict
 import os
+import subprocess
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
@@ -39,13 +40,21 @@ class VisualizePendulum():
         # 2. THE FIX: Synchronize all data to a single Master Timeline
         self._synchronize_data_for_animation()
 
-    def _smart_display(self, ani, fig, save_path="pendulum_animation.mp4"):
-        """Handles the display logic based on the environment."""
+    def _smart_display(self, ani, fig, save_path="pendulum_animation.mp4", port=8000):
         if os.getenv('CODESPACES') == 'true':
             print(f"🌐 Cloud detected: Saving to {save_path}...")
-            plt.close(fig)  # Essential to prevent 'ghost' plots in some setups
+            plt.close(fig)
             ani.save(save_path, writer='ffmpeg', fps=30)
-            print(f"✅ Done! Download {save_path} from the sidebar.")
+
+            # Start HTTP server in background
+            print(f"🚀 Starting HTTP server on port {port}...")
+            subprocess.Popen(
+                ["python", "-m", "http.server", str(port)],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
+
+            print(f"▶ Open in browser: http://localhost:{port}/{save_path}")
         else:
             print("💻 Local detected: Opening popup window...")
             plt.show()
@@ -259,4 +268,4 @@ class VisualizePendulum():
                 self.plot_initializer.create_reference_pendulum_artists(self.ax_pend)
 
         self.plot_initializer.create_pivot_point_artist(self.ax_pend)
-        self.text_pend = self.plot_initializer.create_time_text_artist(self.ax_pend)
+        self.text_pend = self.plot_initializer.create_time_text_artist(self.ax_pend)    
