@@ -9,7 +9,7 @@ from visualization.pendulum_stepcontrol import visualize_pendulum_stepcontrol
 ### Time, stepwidth and initial conditions
 t_end = 5
 h = 0.1
-z0 = [np.deg2rad(75),0]
+z0 = np.array([np.deg2rad(75),0])
 
 
 ### Solve the ODEs
