@@ -13,15 +13,11 @@ z0 = [np.deg2rad(75),0]
 
 
 ### Solve the ODEs
-t_Ee, u_Ee = euler_explicit(damped_pendulum_ode,[0,t_end],z0, h)
-t_RK4, u_RK4 = RK4(damped_pendulum_ode,[0,t_end],z0, h )
-t_sc_mpr, u_sc_mpr, h_sc_mpr, error_sc_mpr = stepcontrol_mid_point_rule(damped_pendulum_ode,[0,t_end],z0)
+
 
 ### Visualize the results
 results = {
-    'Euler_explicit': (t_Ee, u_Ee),
-    'RK4': (t_RK4, u_RK4),
-    'stepcontrol_mid_point_rule': (t_sc_mpr, u_sc_mpr),
+    # 'Euler_explicit': (t_Ee, u_Ee)
 }
 ### Pendulum Animation
 show_reference = True
