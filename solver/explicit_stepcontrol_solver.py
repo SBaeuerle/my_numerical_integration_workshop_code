@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def stepcontrol_mid_point_rule(fcn, t_interval, z0, h_init):
+def stepcontrol_mid_point_rule(fcn, t_interval: list, z0: np.ndarray, h_init: float = 0.1):
 
     # constant
     h_min = 1e-4
@@ -15,7 +15,7 @@ def stepcontrol_mid_point_rule(fcn, t_interval, z0, h_init):
     t_end = max(t_interval)
 
     # init data
-    u_i = np.array(z0)
+    u_i = z0
     t_i = t_start
     h_i = h_init
 

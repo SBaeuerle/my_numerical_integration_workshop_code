@@ -1,123 +1,68 @@
-# VisualizePendulum
+# ODE Solver Comparison Project
 
-A simple Python package to visualize and animate a pendulum simulation.
+A comprehensive Python project for comparing different Ordinary Differential Equation (ODE) solvers using two representative test systems: a damped pendulum and a dual-polarization battery model.
 
-## Description
+## 🚀 Features
 
-This project provides a `VisualizePendulum` class that takes precomputed time and angle data for a simple pendulum (e.g., from an Euler integrator) and renders:
+### Numerical Solvers
+- **Euler Explicit**: Simple first-order explicit method
+- **Runge-Kutta 4th Order (RK4)**: Classic fourth-order explicit method
+- **Midpoint Rule**: Second-order explicit method
+- **Adaptive Step Control**: Midpoint rule with automatic step size adjustment
+- **Reference Solutions**: High-precision solutions using SciPy's `solve_ivp` with BDF method
 
-* A plot of angle vs. time with a growing trace and a moving marker.
-* A side-by-side animation of the pendulum swinging, featuring a rectangular bob that rotates and a live timestamp.
+### Test Systems
+1. **Damped Pendulum**: Nonlinear oscillator with damping
+2. **Battery Model**: Dual-polarization equivalent circuit model for lithium-ion batteries
 
-Designed for ease of use in live-coding demonstrations and educational purposes.
+### Visualization
+- **Interactive Pendulum Animation**: Real-time synchronized visualization of multiple solver results
+- **Battery Performance Plots**: Comprehensive analysis of voltage, current, and state-of-charge
+- **Step Control Analysis**: Visualization of adaptive step size behavior and error estimates
+- **Cloud-friendly Output**: Automatic detection of development environment (local vs. cloud)
 
-## Features
+## 📋 Requirements
+numpy
+matplotlib
+scipy
 
-* **Two-pane visualization**: angle–time curve and animated pendulum.
-* **Customizable parameters**: pendulum length, bob size, animation speed.
-* **Grid display**: gridlines for context, hidden ticks for a clean look.
-* **Type-hinted, well-structured code**: ideal for review by experienced developers.
+## 🏃 Quick Start
 
-## Requirements
-
-* Python 3.8+
-* NumPy
-* Matplotlib
-
-Install via pip:
-
+### Pendulum Simulation
 ```bash
-pip install numpy matplotlib
+python main.py 
 ```
+This will:
 
-Or, if using Poetry:
+Solve the damped pendulum ODE using multiple methods
+Display an interactive animation comparing all solutions
+Show step control analysis plots
 
+### Battery Model Simulation
 ```bash
-poetry add numpy matplotlib
+python main_stiff.py 
 ```
 
-## Installation
+This will:
 
-1. Clone this repository:
-
-   ```bash
-   ```
-
-git clone [https://github.com/yourusername/visualize-pendulum.git](https://github.com/yourusername/visualize-pendulum.git)
-cd visualize-pendulum
-
-````
-2. (Optional) Create a virtual environment:
-   ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-````
-
-3. Install dependencies:
-
-   ```bash
-   ```
-
-pip install -r requirements.txt
-
-````
-   Or with Poetry:
-   ```bash
-poetry install
-````
-
-## Usage
-
-Compute your pendulum simulation data (e.g., with an explicit Euler integrator). Then:
-
-```python
-from visualize_pendulum import VisualizePendulum
-
-# t_values: np.ndarray of time points
-# angle_deg: np.ndarray of angles in degrees
-
-viz = VisualizePendulum(t_values, angle_deg, L=1.0, bob_size=0.1)
-viz.animate(interval=20, repeat=False)
-```
-
-* `interval`: delay between frames in milliseconds (default matches simulation step).
-* `repeat`: whether the animation loops (default `False`).
-
-## Example
-
-```python
-import numpy as np
-from visualize_pendulum import VisualizePendulum
-
-# Simple Euler integration
-g, L, h = 9.81, 1.0, 0.01
-t_vals = np.arange(0, 10+h, h)
-theta = np.deg2rad(45)
-omega = 0.0
-angles = [theta]
-omega_vals = [omega]
-for i in range(1, len(t_vals)):
-    theta_new = angles[-1] + h * omega_vals[-1]
-    omega_new = omega_vals[-1] - h*(g/L)*np.sin(angles[-1])
-    angles.append(theta_new)
-    omega_vals.append(omega_new)
-angles_deg = np.rad2deg(angles)
-
-viz = VisualizePendulum(t_vals, angles_deg)
-viz.animate()
-```
+Solve the stiff battery model equations
+Compare explicit methods with implicit BDF solver
+Display comprehensive battery performance plots
 
 ## Project Structure
-
-```
-visualize-pendulum/
-├── visualize_pendulum.py       # Main module
-├── README.md
-├── requirements.txt
-└── examples/
-    └── example.py             # Demo script
-```
-
-## License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+├── main.py                                    # Pendulum simulation runner
+├── main_stiff.py                             # Battery model simulation runner
+├── solver/
+│   ├── explicit_solver.py                   # Euler, RK4, Midpoint implementations
+│   └── explicit_stepcontrol_solver.py       # Adaptive step size control
+├── system_odes/
+│   ├── pendulum_ode.py                      # Damped pendulum equations
+│   └── dp_ec_battery_model.py               # Battery model equations
+└── visualization/
+    ├── pendulum/
+    │   ├── visualize_pendulum.py            # Main pendulum animation class
+    │   ├── pendulum_data.py                 # Data management and synchronization
+    │   └── pendulum_plot_utils.py           # Plot initialization utilities
+    ├── dp_ec_battery.py                     # Battery visualization
+    ├── pendulum_stepcontrol.py              # Step control analysis plots
+    └── helper.py                            # Environment-aware plotting utilities

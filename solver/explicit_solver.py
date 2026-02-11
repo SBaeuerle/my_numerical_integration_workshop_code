@@ -4,7 +4,7 @@ import math
 from matplotlib.pyplot import savefig
 
 
-def euler_explicit(fcn, t_interval: list, z0: list, h: float):
+def euler_explicit(fcn, t_interval: list, z0: np.ndarray, h: float):
 
     # Time and iterations
     t_start = min(t_interval)
@@ -12,12 +12,12 @@ def euler_explicit(fcn, t_interval: list, z0: list, h: float):
     number_of_iterations = math.ceil((t_end - t_start) / h) - 1
 
     # Assign initial conditions
-    u_i = np.array(z0)
+    u_i = z0
     t_i = t_start
 
     # Init data container
     t_container: list = [t_start]
-    u_container: list = [z0]
+    u_container: list = [u_i]
 
     # Euler explicit
     for i in range(0, number_of_iterations):
@@ -35,7 +35,7 @@ def euler_explicit(fcn, t_interval: list, z0: list, h: float):
 
     return np.array(t_container), np.array(u_container)
 
-def mid_point_rule(fcn, t_interval: list, z0: list, h:float):
+def mid_point_rule(fcn, t_interval: list, z0: np.ndarray, h:float):
 
     # Time and iterations
     t_start = min(t_interval)
@@ -44,11 +44,11 @@ def mid_point_rule(fcn, t_interval: list, z0: list, h:float):
 
     # Assign initial conditions
     t_i = t_start
-    u_i = np.array(z0)
+    u_i = z0
 
     # init data container
     t_container: list = [t_start]
-    u_container: list = [np.array(z0)]
+    u_container: list = [u_i]
 
     # Mid-point rule
     for i in range(0, number_of_iterations):
@@ -69,7 +69,7 @@ def mid_point_rule(fcn, t_interval: list, z0: list, h:float):
     return np.array(t_container), np.array(u_container)
 
 
-def RK4(fcn, t_interval: list, z0: list, h: float):
+def RK4(fcn, t_interval: list, z0: np.ndarray, h: float):
 
     # Time and iterations
     t_start = min(t_interval)
@@ -77,7 +77,7 @@ def RK4(fcn, t_interval: list, z0: list, h: float):
     number_of_iterations = math.ceil((t_end-t_start)/h)-1
 
     # Assign initial conditions
-    u_i = np.array(z0)
+    u_i = z0
     t_i = t_start
 
     # Initialize data containers

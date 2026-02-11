@@ -1,33 +1,32 @@
 import numpy as np
-
-from solver.explicit_solver import euler_explicit, mid_point_rule, RK4
+from solver.explicit_solver import euler_explicit, RK4
 from solver.explicit_stepcontrol_solver import stepcontrol_mid_point_rule
 from system_odes.pendulum_ode import damped_pendulum_ode
-
 from visualization.pendulum.visualize_pendulum import VisualizePendulum
 from visualization.pendulum_stepcontrol import visualize_pendulum_stepcontrol
 
-# Parameters and initial conditions
+#################################################################################################
+### Time, stepwidth and initial conditions
 t_end = 5
-h = 0.5
+h = 0.1
 z0 = [np.deg2rad(75),0]
 
 
-# Simulate
-t_values, u_values = euler_explicit(damped_pendulum_ode,[0,t_end],z0, h)
-t_values_2, u_values_2 = mid_point_rule(damped_pendulum_ode,[0,t_end],z0, h)
-t_values_3, u_values_3 = RK4(damped_pendulum_ode,[0,t_end],z0, h )
-t_values_4, u_values_4, h_values_4, relative_error_values_4 = stepcontrol_mid_point_rule(damped_pendulum_ode,[0,t_end],z0, h)
+### Solve the ODEs
+t_Ee, u_Ee = euler_explicit(damped_pendulum_ode,[0,t_end],z0, h)
+t_RK4, u_RK4 = RK4(damped_pendulum_ode,[0,t_end],z0, h )
+t_sc_mpr, u_sc_mpr, h_sc_mpr, error_sc_mpr = stepcontrol_mid_point_rule(damped_pendulum_ode,[0,t_end],z0)
 
-show_reference = True
+### Visualize the results
 results = {
-    'Euler_explicit': (t_values, u_values),
-    'Mid_point_rule': (t_values_2, u_values_2),
-    'RK4': (t_values_3, u_values_3),
-    'stepcontrol_mid_point_rule': (t_values_4, u_values_4),
+    'Euler_explicit': (t_Ee, u_Ee),
+    'RK4': (t_RK4, u_RK4),
+    'stepcontrol_mid_point_rule': (t_sc_mpr, u_sc_mpr),
 }
-
+### Pendulum Animation
+show_reference = True
 viz_pendel = VisualizePendulum(results, show_reference)
 viz_pendel.animate()
 
-visualize_pendulum_stepcontrol(t_values_4, u_values_4, h_values_4, relative_error_values_4)
+### Overview plot on errors
+visualize_pendulum_stepcontrol(t_sc_mpr, u_sc_mpr, h_sc_mpr, error_sc_mpr )

@@ -10,4 +10,6 @@ def damped_pendulum_ode(t: float, z: np.ndarray):
     D: float = d / (2 * m * omega_0)
 
     theta, dtheta = z
-    return np.array([dtheta, -2*D*omega_0*dtheta - omega_0**2*np.sin(theta)])
+    dz = [dtheta, -2*D*omega_0*dtheta - omega_0**2*np.sin(theta)]
+
+    return np.array(dz)
